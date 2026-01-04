@@ -1,34 +1,32 @@
 import { useState } from "react";
-import { Power, User } from "lucide-react";
+import { Shield, Zap } from "lucide-react";
 import Particle from "./Particle";
 
-interface SoftwareOption {
+interface Software {
   id: string;
   name: string;
   description: string;
-  enabled: boolean;
-  icon: "power" | "user";
+  icon: "stealth" | "full";
 }
 
 const DashboardView = () => {
-  const [options, setOptions] = useState<SoftwareOption[]>([
-    {
-      id: "randomizer",
-      name: "Randomizer",
-      description: "Randomize all your serials",
-      enabled: false,
-      icon: "power",
-    },
-    {
-      id: "virtualizer",
-      name: "Virtualizer [ Tournaments ]",
-      description: "Virtualize all your serials",
-      enabled: false,
-      icon: "user",
-    },
-  ]);
-
+  const [selectedSoftware, setSelectedSoftware] = useState<string | null>(null);
   const expiryDate = "2025-02-15";
+
+  const softwareList: Software[] = [
+    {
+      id: "stealth",
+      name: "FiveM Stealth",
+      description: "Undetected mode",
+      icon: "stealth",
+    },
+    {
+      id: "full",
+      name: "FiveM Full",
+      description: "All features enabled",
+      icon: "full",
+    },
+  ];
 
   const particles = [
     { top: "10%", left: "5%", delay: 0 },
@@ -37,16 +35,10 @@ const DashboardView = () => {
     { top: "65%", right: "5%", delay: 1.8 },
   ];
 
-  const toggleOption = (id: string) => {
-    setOptions((prev) =>
-      prev.map((opt) =>
-        opt.id === id ? { ...opt, enabled: !opt.enabled } : opt
-      )
-    );
-  };
-
   const handleLaunch = () => {
-    console.log("Launching FiveM with options:", options);
+    if (selectedSoftware) {
+      console.log("Launching:", selectedSoftware);
+    }
   };
 
   return (
@@ -69,33 +61,36 @@ const DashboardView = () => {
         Ahujien
       </h1>
 
-      {/* Software options */}
-      <div className="mb-6 space-y-4">
-        {options.map((option) => (
-          <div key={option.id} className="flex items-center gap-4">
+      {/* Software selection */}
+      <div className="mb-6 space-y-3">
+        {softwareList.map((software) => (
+          <div
+            key={software.id}
+            onClick={() => setSelectedSoftware(software.id)}
+            className={`software-card flex cursor-pointer items-center gap-4 p-4 ${
+              selectedSoftware === software.id ? "selected" : ""
+            }`}
+          >
             <div className="software-icon">
-              {option.icon === "power" ? (
-                <Power className="h-5 w-5 text-primary" />
+              {software.icon === "stealth" ? (
+                <Shield className="h-5 w-5 text-primary" />
               ) : (
-                <User className="h-5 w-5 text-muted-foreground" />
+                <Zap className="h-5 w-5 text-primary" />
               )}
             </div>
             <div className="flex-1">
               <div className="text-sm font-medium text-foreground">
-                {option.name}
+                {software.name}
               </div>
               <div className="text-xs text-muted-foreground">
-                {option.description}
+                {software.description}
               </div>
             </div>
             <div
-              className={`toggle-switch flex items-center px-0.5 ${
-                option.enabled ? "active" : ""
+              className={`radio-dot ${
+                selectedSoftware === software.id ? "active" : ""
               }`}
-              onClick={() => toggleOption(option.id)}
-            >
-              <div className="toggle-knob" />
-            </div>
+            />
           </div>
         ))}
       </div>
@@ -103,7 +98,8 @@ const DashboardView = () => {
       {/* Launch button */}
       <button
         onClick={handleLaunch}
-        className="launcher-button mb-6 w-full py-3 text-sm font-medium text-foreground"
+        disabled={!selectedSoftware}
+        className="launcher-button mb-6 w-full py-3 text-sm font-medium text-foreground disabled:opacity-50 disabled:cursor-not-allowed"
       >
         Launch
       </button>
