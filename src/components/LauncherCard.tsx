@@ -1,20 +1,16 @@
 import { useState } from "react";
-import Particle from "./Particle";
+import ImGuiParticles from "./ImGuiParticles";
 import DashboardView from "./DashboardView";
+
+// ImGui equivalent:
+// static char license[256] = "";
+// static bool logged_in = false;
 
 const LauncherCard = () => {
   const [license, setLicense] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  const particles = [
-    { top: "15%", left: "10%", delay: 0 },
-    { top: "25%", right: "15%", delay: 1.5 },
-    { top: "40%", left: "20%", delay: 0.8 },
-    { top: "50%", right: "10%", delay: 2.2 },
-    { top: "70%", left: "8%", delay: 1.2 },
-    { top: "60%", right: "20%", delay: 0.5 },
-  ];
-
+  // ImGui: if (logged_in) { RenderDashboard(); return; }
   const handleLogin = () => {
     setIsLoggedIn(true);
   };
@@ -23,28 +19,36 @@ const LauncherCard = () => {
     return <DashboardView />;
   }
 
+  // ImGui equivalent:
+  // ImGui::BeginChild("LoginCard", ImVec2(420, 300), true);
+  // 
+  // // Draw particles using ImDrawList (see ImGuiParticles)
+  // RenderParticles(ImGui::GetWindowDrawList(), ImGui::GetWindowPos());
+  // 
+  // ImGui::SetCursorPosX((420 - ImGui::CalcTextSize("Ahujien").x) / 2);
+  // ImGui::TextColored(ImVec4(0.06f, 0.72f, 0.50f, 1.0f), "Ahujien");
+  // 
+  // ImGui::Text("License");
+  // ImGui::InputText("##license", license, 256);
+  // 
+  // if (ImGui::Button("Login", ImVec2(-1, 40))) {
+  //     logged_in = true;
+  // }
+  // 
+  // ImGui::EndChild();
+
   return (
     <div className="launcher-card relative w-[420px] p-8">
-      {/* Floating particles */}
-      {particles.map((pos, i) => (
-        <Particle
-          key={i}
-          style={{
-            top: pos.top,
-            left: pos.left,
-            right: pos.right,
-          }}
-          delay={pos.delay}
-        />
-      ))}
+      {/* Particles - ImDrawList circles */}
+      <ImGuiParticles />
 
-      {/* Title */}
-      <h1 className="title-glow mb-12 text-center text-4xl font-bold tracking-wide text-primary">
+      {/* Title - ImGui::TextColored */}
+      <h1 className="title-glow relative z-10 mb-12 text-center text-4xl font-bold tracking-wide text-primary">
         Ahujien
       </h1>
 
-      {/* License input */}
-      <div className="mb-6">
+      {/* License input - ImGui::InputText */}
+      <div className="relative z-10 mb-6">
         <label className="mb-2 block text-sm text-muted-foreground">
           License
         </label>
@@ -57,10 +61,10 @@ const LauncherCard = () => {
         />
       </div>
 
-      {/* Login button */}
+      {/* Login button - ImGui::Button */}
       <button
         onClick={handleLogin}
-        className="launcher-button w-full py-3 text-sm font-medium text-foreground"
+        className="launcher-button relative z-10 w-full py-3 text-sm font-medium text-foreground"
       >
         Login
       </button>

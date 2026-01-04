@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Shield, Zap } from "lucide-react";
-import Particle from "./Particle";
+import ImGuiParticles from "./ImGuiParticles";
 
 interface Software {
   id: string;
@@ -8,6 +8,9 @@ interface Software {
   description: string;
   icon: "stealth" | "full";
 }
+
+// ImGui equivalent:
+// static int selected_software = -1;
 
 const DashboardView = () => {
   const [selectedSoftware, setSelectedSoftware] = useState<string | null>(null);
@@ -28,42 +31,47 @@ const DashboardView = () => {
     },
   ];
 
-  const particles = [
-    { top: "10%", left: "5%", delay: 0 },
-    { top: "20%", right: "8%", delay: 1.2 },
-    { top: "50%", left: "12%", delay: 0.6 },
-    { top: "65%", right: "5%", delay: 1.8 },
-  ];
-
+  // ImGui: if (ImGui::Button("Launch") && selected_software >= 0) { Launch(); }
   const handleLaunch = () => {
     if (selectedSoftware) {
       console.log("Launching:", selectedSoftware);
     }
   };
 
+  // ImGui equivalent:
+  // ImGui::BeginChild("Dashboard", ImVec2(420, 400), true);
+  // 
+  // RenderParticles(ImGui::GetWindowDrawList(), ImGui::GetWindowPos());
+  // 
+  // ImGui::TextColored(emerald, "Ahujien");
+  // 
+  // for (int i = 0; i < software_count; i++) {
+  //     bool is_selected = (selected_software == i);
+  //     if (ImGui::Selectable(software[i].name, is_selected, 0, ImVec2(-1, 50))) {
+  //         selected_software = i;
+  //     }
+  // }
+  // 
+  // if (ImGui::Button("Launch", ImVec2(-1, 40))) { Launch(); }
+  // 
+  // ImGui::TextColored(emerald, "Notification");
+  // ImGui::Text("Session validated. Expires: %s", expiry_date);
+  // 
+  // ImGui::EndChild();
+
   return (
     <div className="launcher-card relative w-[420px] p-8">
-      {/* Floating particles */}
-      {particles.map((pos, i) => (
-        <Particle
-          key={i}
-          style={{
-            top: pos.top,
-            left: pos.left,
-            right: pos.right,
-          }}
-          delay={pos.delay}
-        />
-      ))}
+      {/* Particles - ImDrawList circles */}
+      <ImGuiParticles />
 
-      {/* Title */}
-      <h1 className="title-glow mb-8 text-center text-4xl font-bold tracking-wide text-primary">
+      {/* Title - ImGui::TextColored */}
+      <h1 className="title-glow relative z-10 mb-8 text-center text-4xl font-bold tracking-wide text-primary">
         Ahujien
       </h1>
 
-      {/* Software selection */}
-      <div className="mb-6 space-y-3">
-        {softwareList.map((software) => (
+      {/* Software selection - ImGui::Selectable */}
+      <div className="relative z-10 mb-6 space-y-3">
+        {softwareList.map((software, index) => (
           <div
             key={software.id}
             onClick={() => setSelectedSoftware(software.id)}
@@ -95,17 +103,17 @@ const DashboardView = () => {
         ))}
       </div>
 
-      {/* Launch button */}
+      {/* Launch button - ImGui::Button */}
       <button
         onClick={handleLaunch}
         disabled={!selectedSoftware}
-        className="launcher-button mb-6 w-full py-3 text-sm font-medium text-foreground disabled:opacity-50 disabled:cursor-not-allowed"
+        className="launcher-button relative z-10 mb-6 w-full py-3 text-sm font-medium text-foreground disabled:cursor-not-allowed disabled:opacity-50"
       >
         Launch
       </button>
 
-      {/* Notification / Expiry */}
-      <div className="notification-box px-4 py-3">
+      {/* Notification - ImGui::TextColored + ImGui::Text */}
+      <div className="notification-box relative z-10 px-4 py-3">
         <div className="text-sm font-medium text-primary">Notification</div>
         <div className="text-xs text-muted-foreground">
           Session is validated. Expires: {expiryDate}
