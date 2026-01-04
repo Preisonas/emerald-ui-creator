@@ -1,8 +1,10 @@
 import { useState } from "react";
 import Particle from "./Particle";
+import DashboardView from "./DashboardView";
 
 const LauncherCard = () => {
   const [license, setLicense] = useState("");
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const particles = [
     { top: "15%", left: "10%", delay: 0 },
@@ -14,11 +16,15 @@ const LauncherCard = () => {
   ];
 
   const handleLogin = () => {
-    console.log("Login with license:", license);
+    setIsLoggedIn(true);
   };
 
+  if (isLoggedIn) {
+    return <DashboardView />;
+  }
+
   return (
-    <div className="launcher-card relative w-[420px] rounded-lg p-8">
+    <div className="launcher-card relative w-[420px] p-8">
       {/* Floating particles */}
       {particles.map((pos, i) => (
         <Particle
@@ -34,7 +40,7 @@ const LauncherCard = () => {
 
       {/* Title */}
       <h1 className="title-glow mb-12 text-center text-4xl font-bold tracking-wide text-primary">
-        Neptune
+        Ahujien
       </h1>
 
       {/* License input */}
@@ -47,14 +53,14 @@ const LauncherCard = () => {
           value={license}
           onChange={(e) => setLicense(e.target.value)}
           placeholder=""
-          className="launcher-input w-full rounded px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground"
+          className="launcher-input w-full px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground"
         />
       </div>
 
       {/* Login button */}
       <button
         onClick={handleLogin}
-        className="launcher-button w-full rounded py-3 text-sm font-medium text-foreground"
+        className="launcher-button w-full py-3 text-sm font-medium text-foreground"
       >
         Login
       </button>
