@@ -4,7 +4,7 @@
 
 @layer base {
   :root {
-    --background: 0 0% 8%;
+    --background: 0 0% 0% / 0;
     --foreground: 0 0% 95%;
 
     --card: 0 0% 10%;
@@ -32,16 +32,9 @@
     --input: 0 0% 14%;
     --ring: 160 84% 39%;
 
-    --radius: 0.25rem;
+    --radius: 0;
 
-    /* Custom glow effects */
     --glow-primary: 160 84% 39%;
-    --glow-size: 80px;
-  }
-
-  .dark {
-    --background: 0 0% 8%;
-    --foreground: 0 0% 95%;
   }
 }
 
@@ -51,12 +44,12 @@
   }
 
   body {
-    @apply bg-background text-foreground antialiased;
+    @apply text-foreground antialiased;
+    background: transparent;
     font-family: 'Segoe UI', system-ui, sans-serif;
   }
 }
 
-/* Particle glow animation */
 @keyframes float {
   0%, 100% {
     transform: translateY(0) translateX(0);
@@ -68,21 +61,11 @@
   }
 }
 
-@keyframes pulse-glow {
-  0%, 100% {
-    box-shadow: 0 0 20px 5px hsl(var(--primary) / 0.3);
-  }
-  50% {
-    box-shadow: 0 0 40px 10px hsl(var(--primary) / 0.5);
-  }
-}
-
 .particle {
   position: absolute;
   width: 8px;
   height: 8px;
   background: hsl(var(--primary));
-  border-radius: 50%;
   box-shadow: 0 0 20px 8px hsl(var(--primary) / 0.6);
   animation: float 4s ease-in-out infinite;
 }
@@ -90,7 +73,6 @@
 .launcher-card {
   background: hsl(var(--card));
   border: 1px solid hsl(var(--border));
-  box-shadow: 0 0 60px 10px hsl(var(--primary) / 0.1);
 }
 
 .launcher-input {
@@ -119,4 +101,41 @@
 .title-glow {
   text-shadow: 0 0 30px hsl(var(--primary) / 0.8),
                0 0 60px hsl(var(--primary) / 0.4);
+}
+
+.notification-box {
+  background: hsl(var(--secondary));
+  border-left: 3px solid hsl(var(--primary));
+}
+
+.toggle-switch {
+  width: 44px;
+  height: 22px;
+  background: hsl(var(--muted));
+  transition: background 0.2s ease;
+  cursor: pointer;
+}
+
+.toggle-switch.active {
+  background: hsl(var(--primary));
+}
+
+.toggle-knob {
+  width: 18px;
+  height: 18px;
+  background: hsl(var(--foreground));
+  transition: transform 0.2s ease;
+}
+
+.toggle-switch.active .toggle-knob {
+  transform: translateX(22px);
+}
+
+.software-icon {
+  width: 36px;
+  height: 36px;
+  background: hsl(var(--primary) / 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
