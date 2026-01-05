@@ -25,25 +25,26 @@ const LauncherCard = () => {
 
   return (
     <div className="animate-fade-in relative w-[380px] overflow-hidden rounded-2xl">
-      {/* Background image with blur */}
+      {/* Background image - contained to show full image */}
       <div 
-        className="absolute inset-0 bg-cover bg-center blur-sm scale-110"
+        className="absolute inset-0 bg-cover bg-top"
         style={{ backgroundImage: `url(${dashboardBg})` }}
       />
       
-      {/* Gradient overlay - emerald top, black bottom */}
+      {/* Gradient overlay - clean emerald top, black bottom */}
       <div 
         className="absolute inset-0"
         style={{ 
-          background: "linear-gradient(to bottom, hsla(160, 84%, 25%, 0.7) 0%, hsla(0, 0%, 0%, 0.9) 100%)" 
+          background: "linear-gradient(to bottom, hsla(160, 70%, 20%, 0.75) 0%, hsla(0, 0%, 5%, 0.95) 60%)" 
         }}
       />
 
       <div className="relative z-10 p-6">
         <ImGuiParticles />
 
-      <h1 className="title-glow relative z-10 mb-8 text-center text-3xl font-bold tracking-wide text-primary">
-        Ahujien
+      <h1 className="relative z-10 mb-8 text-center text-2xl font-bold tracking-wide">
+        <span className="text-foreground">Welcome to </span>
+        <span className="title-glow text-primary">Ahujien</span>
       </h1>
 
       {view === "loading" ? (
