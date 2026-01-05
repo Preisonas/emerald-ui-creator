@@ -52,25 +52,23 @@ const DashboardView = () => {
   };
 
   return (
-    <div className="relative flex h-screen w-screen items-center justify-center overflow-hidden">
-      {/* Main content card with background image */}
-      <div className="animate-fade-in relative z-10 w-[480px] overflow-hidden rounded-2xl">
-        {/* Background image with blur */}
-        <div 
-          className="absolute inset-0 bg-cover bg-center blur-sm"
-          style={{ backgroundImage: `url(${dashboardBg})` }}
-        />
-        
-        {/* Gradient overlay - emerald top, black bottom */}
-        <div 
-          className="absolute inset-0"
-          style={{ 
-            background: "linear-gradient(to bottom, hsla(160, 84%, 25%, 0.7) 0%, hsla(0, 0%, 0%, 0.85) 100%)" 
-          }}
-        />
-        
-        {/* Content */}
-        <div className="relative z-10 p-8">
+    <div className="animate-fade-in relative w-[480px] overflow-hidden rounded-2xl">
+      {/* Background image with blur */}
+      <div 
+        className="absolute inset-0 bg-cover bg-center blur-sm scale-110"
+        style={{ backgroundImage: `url(${dashboardBg})` }}
+      />
+      
+      {/* Gradient overlay - emerald top, black bottom */}
+      <div 
+        className="absolute inset-0"
+        style={{ 
+          background: "linear-gradient(to bottom, hsla(160, 84%, 25%, 0.7) 0%, hsla(0, 0%, 0%, 0.9) 100%)" 
+        }}
+      />
+      
+      {/* Content */}
+      <div className="relative z-10 p-8">
         {/* Header */}
         <div className="mb-8 flex items-center justify-between">
           <div>
@@ -153,7 +151,6 @@ const DashboardView = () => {
             <div className="text-[11px] text-muted-foreground">Version</div>
             <div className="text-xs font-semibold text-foreground">v1.2.4</div>
           </div>
-        </div>
         </div>
       </div>
     </div>
