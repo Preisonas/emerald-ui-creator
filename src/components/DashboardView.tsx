@@ -1,5 +1,4 @@
 import { useState } from "react";
-import ImGuiParticles from "./ImGuiParticles";
 import stealthLogo from "@/assets/stealth-logo.png";
 
 interface Software {
@@ -31,20 +30,6 @@ const DashboardView = () => {
       image: "https://cdn-icons-png.flaticon.com/512/7016/7016344.png",
       status: "available",
     },
-    {
-      id: "spoofer",
-      name: "HWID Spoofer",
-      description: "Hardware ID reset",
-      image: "https://cdn-icons-png.flaticon.com/512/2099/2099058.png",
-      status: "available",
-    },
-    {
-      id: "gtav",
-      name: "GTA V Menu",
-      description: "Recovery & mods",
-      image: "https://cdn-icons-png.flaticon.com/512/5073/5073059.png",
-      status: "coming-soon",
-    },
   ];
 
   const handleLaunch = () => {
@@ -65,97 +50,83 @@ const DashboardView = () => {
     }, 50);
   };
 
-  const availableSoftware = softwareList.filter(s => s.status === "available");
-  const comingSoonSoftware = softwareList.filter(s => s.status === "coming-soon");
-
   return (
-    <div className="launcher-card animate-fade-in relative w-[520px] overflow-hidden p-6">
-      <ImGuiParticles />
-
-      {/* Header */}
-      <div className="relative z-10 mb-6 flex items-center justify-between">
-        <h1 className="title-glow text-2xl font-bold tracking-wide text-primary">
-          Ahujien
-        </h1>
-        <div className="flex items-center gap-2">
-          <div className="h-1.5 w-1.5 animate-pulse rounded-full bg-primary" />
-          <span className="text-xs text-muted-foreground">Connected</span>
-        </div>
+    <div className="relative flex h-screen w-screen items-center justify-center overflow-hidden">
+      {/* Blurred colored background shapes */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div 
+          className="absolute -left-32 -top-32 h-96 w-96 rounded-full opacity-30 blur-[120px]"
+          style={{ background: "hsl(160 84% 39%)" }}
+        />
+        <div 
+          className="absolute -bottom-48 -right-32 h-[500px] w-[500px] rounded-full opacity-25 blur-[140px]"
+          style={{ background: "hsl(200 80% 50%)" }}
+        />
+        <div 
+          className="absolute left-1/2 top-1/4 h-72 w-72 -translate-x-1/2 rounded-full opacity-20 blur-[100px]"
+          style={{ background: "hsl(280 70% 50%)" }}
+        />
       </div>
 
-      {/* Available Software */}
-      <div className="relative z-10 mb-4">
-        <p className="mb-3 text-xs font-medium uppercase tracking-wider text-muted-foreground">
-          Available
-        </p>
-        <div className="grid grid-cols-3 gap-3">
-          {availableSoftware.map((software) => (
+      {/* Main content card */}
+      <div className="animate-fade-in relative z-10 w-[480px] rounded-2xl bg-card/90 p-8 backdrop-blur-xl">
+        {/* Header */}
+        <div className="mb-8 flex items-center justify-between">
+          <div>
+            <h1 className="title-glow text-2xl font-bold tracking-wide text-primary">
+              Ahujien
+            </h1>
+            <p className="mt-1 text-xs text-muted-foreground">Select your software</p>
+          </div>
+          <div className="flex items-center gap-2 rounded-full bg-primary/10 px-3 py-1.5">
+            <div className="h-2 w-2 animate-pulse rounded-full bg-primary" />
+            <span className="text-xs font-medium text-primary">Online</span>
+          </div>
+        </div>
+
+        {/* Software Grid */}
+        <div className="mb-6 grid grid-cols-2 gap-4">
+          {softwareList.map((software) => (
             <div
               key={software.id}
-              onClick={() => setSelectedSoftware(software.id)}
-              className={`software-card group cursor-pointer p-3 text-center transition-all duration-200 hover:scale-[1.02] ${
-                selectedSoftware === software.id ? "selected" : ""
+              onClick={() => software.status === "available" && setSelectedSoftware(software.id)}
+              className={`group relative cursor-pointer overflow-hidden rounded-xl p-4 transition-all duration-300 ${
+                selectedSoftware === software.id
+                  ? "bg-primary/15 ring-1 ring-primary/50"
+                  : "bg-secondary/80 hover:bg-secondary"
               }`}
             >
-              <div className="mx-auto mb-2 flex h-10 w-10 items-center justify-center rounded-md bg-secondary/60">
-                <img
-                  src={software.image}
-                  alt={software.name}
-                  className="h-6 w-6 object-contain transition-transform duration-200 group-hover:scale-110"
-                />
-              </div>
-              <div className="text-xs font-medium text-foreground">
-                {software.name}
-              </div>
-              <div className="text-[10px] text-muted-foreground">
-                {software.description}
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Coming Soon */}
-      {comingSoonSoftware.length > 0 && (
-        <div className="relative z-10 mb-4">
-          <p className="mb-3 text-xs font-medium uppercase tracking-wider text-muted-foreground">
-            Coming Soon
-          </p>
-          <div className="grid grid-cols-3 gap-3">
-            {comingSoonSoftware.map((software) => (
-              <div
-                key={software.id}
-                className="software-card cursor-not-allowed p-3 text-center opacity-50"
-              >
-                <div className="mx-auto mb-2 flex h-10 w-10 items-center justify-center rounded-md bg-secondary/60">
+              <div className="flex items-start gap-4">
+                <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-xl bg-background/50">
                   <img
                     src={software.image}
                     alt={software.name}
-                    className="h-6 w-6 object-contain grayscale"
+                    className="h-8 w-8 object-contain transition-transform duration-300 group-hover:scale-110"
                   />
                 </div>
-                <div className="text-xs font-medium text-foreground">
-                  {software.name}
-                </div>
-                <div className="text-[10px] text-muted-foreground">
-                  {software.description}
+                <div className="flex-1">
+                  <h3 className="text-sm font-semibold text-foreground">{software.name}</h3>
+                  <p className="mt-0.5 text-xs text-muted-foreground">{software.description}</p>
                 </div>
               </div>
-            ))}
-          </div>
+              
+              {/* Selection indicator */}
+              {selectedSoftware === software.id && (
+                <div className="absolute right-3 top-3 h-2.5 w-2.5 rounded-full bg-primary shadow-lg shadow-primary/50" />
+              )}
+            </div>
+          ))}
         </div>
-      )}
 
-      {/* Actions */}
-      <div className="relative z-10 mb-4 flex gap-3">
+        {/* Launch Button */}
         <button
           onClick={handleLaunch}
           disabled={!selectedSoftware || isInjecting}
-          className="launcher-button relative flex-1 overflow-hidden py-2.5 text-xs font-medium text-foreground transition-all duration-200 disabled:cursor-not-allowed disabled:opacity-40"
+          className="relative mb-6 w-full overflow-hidden rounded-xl bg-primary py-3.5 text-sm font-semibold text-primary-foreground transition-all duration-300 hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-40"
         >
           {isInjecting && (
             <div
-              className="absolute inset-y-0 left-0 bg-primary/20 transition-all duration-75"
+              className="absolute inset-y-0 left-0 bg-white/20 transition-all duration-75"
               style={{ width: `${injectionProgress}%` }}
             />
           )}
@@ -163,26 +134,24 @@ const DashboardView = () => {
             {isInjecting
               ? injectionProgress < 100
                 ? `Injecting ${injectionProgress}%`
-                : "Done!"
+                : "Success!"
               : "Launch"}
           </span>
         </button>
-        <button className="launcher-button px-4 py-2.5 text-xs font-medium text-muted-foreground transition-all duration-200">
-          Settings
-        </button>
-      </div>
 
-      {/* Footer */}
-      <div className="notification-box relative z-10 flex items-center justify-between px-3 py-2.5">
-        <div>
-          <div className="text-xs font-medium text-primary">Session Active</div>
-          <div className="text-[10px] text-muted-foreground">
-            Expires {expiryDate}
+        {/* Footer Info */}
+        <div className="flex items-center justify-between rounded-xl bg-secondary/60 px-4 py-3">
+          <div className="flex items-center gap-3">
+            <div className="h-8 w-1 rounded-full bg-primary" />
+            <div>
+              <div className="text-xs font-medium text-foreground">Session Active</div>
+              <div className="text-[11px] text-muted-foreground">Expires {expiryDate}</div>
+            </div>
           </div>
-        </div>
-        <div className="text-right">
-          <div className="text-[10px] text-muted-foreground">Version</div>
-          <div className="text-xs font-medium text-foreground">1.2.4</div>
+          <div className="text-right">
+            <div className="text-[11px] text-muted-foreground">Version</div>
+            <div className="text-xs font-semibold text-foreground">v1.2.4</div>
+          </div>
         </div>
       </div>
     </div>
