@@ -1,6 +1,7 @@
 import { useState } from "react";
 import stealthLogo from "@/assets/stealth-logo.png";
 import dashboardBg from "@/assets/dashboard-bg.png";
+import ImGuiParticles from "./ImGuiParticles";
 
 interface Software {
   id: string;
@@ -53,29 +54,32 @@ const DashboardView = () => {
 
   return (
     <div className="animate-fade-in relative w-[480px] overflow-hidden rounded-2xl">
-      {/* Background image with blur */}
+      {/* Background image */}
       <div 
-        className="absolute inset-0 bg-cover bg-center blur-sm scale-110"
+        className="absolute inset-0 bg-cover bg-top"
         style={{ backgroundImage: `url(${dashboardBg})` }}
       />
       
-      {/* Gradient overlay - emerald top, black bottom */}
+      {/* Gradient overlay - clean emerald top, black bottom */}
       <div 
         className="absolute inset-0"
         style={{ 
-          background: "linear-gradient(to bottom, hsla(160, 84%, 25%, 0.7) 0%, hsla(0, 0%, 0%, 0.9) 100%)" 
+          background: "linear-gradient(to bottom, hsla(160, 70%, 20%, 0.75) 0%, hsla(0, 0%, 5%, 0.95) 60%)" 
         }}
       />
       
       {/* Content */}
       <div className="relative z-10 p-8">
+        <ImGuiParticles />
+        
         {/* Header */}
-        <div className="mb-8 flex items-center justify-between">
+        <div className="mb-8 flex items-center justify-between animate-fade-in" style={{ animationDelay: "0.1s" }}>
           <div>
-            <h1 className="title-glow text-2xl font-bold tracking-wide text-primary">
-              Ahujien
+            <h1 className="text-2xl font-bold tracking-wide">
+              <span className="text-foreground">Welcome to </span>
+              <span className="title-glow text-primary">Ahujien</span>
             </h1>
-            <p className="mt-1 text-xs text-muted-foreground">Select your software</p>
+            <p className="mt-1 text-xs text-foreground/80">Select your software</p>
           </div>
           <div className="flex items-center gap-2 rounded-full bg-primary/10 px-3 py-1.5">
             <div className="h-2 w-2 animate-pulse rounded-full bg-primary" />
@@ -85,22 +89,23 @@ const DashboardView = () => {
 
         {/* Software Grid */}
         <div className="mb-6 grid grid-cols-2 gap-4">
-          {softwareList.map((software) => (
+          {softwareList.map((software, index) => (
             <div
               key={software.id}
               onClick={() => software.status === "available" && setSelectedSoftware(software.id)}
-              className={`group relative cursor-pointer overflow-hidden rounded-xl p-4 transition-all duration-300 ${
+              className={`group relative cursor-pointer overflow-hidden rounded-xl p-4 transition-all duration-300 animate-fade-in hover:scale-[1.02] ${
                 selectedSoftware === software.id
-                  ? "bg-primary/15 ring-1 ring-primary/50"
+                  ? "bg-primary/15 ring-1 ring-primary/50 scale-[1.02]"
                   : "bg-secondary/80 hover:bg-secondary"
               }`}
+              style={{ animationDelay: `${0.2 + index * 0.1}s` }}
             >
               <div className="flex items-start gap-4">
-                <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-xl bg-background/50">
+                <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-xl bg-background/50 transition-transform duration-300 group-hover:scale-105">
                   <img
                     src={software.image}
                     alt={software.name}
-                    className="h-8 w-8 object-contain transition-transform duration-300 group-hover:scale-110"
+                    className="h-8 w-8 object-contain"
                   />
                 </div>
                 <div className="flex-1">
@@ -111,7 +116,7 @@ const DashboardView = () => {
               
               {/* Selection indicator */}
               {selectedSoftware === software.id && (
-                <div className="absolute right-3 top-3 h-2.5 w-2.5 rounded-full bg-primary shadow-lg shadow-primary/50" />
+                <div className="absolute right-3 top-3 h-2.5 w-2.5 rounded-full bg-primary shadow-lg shadow-primary/50 animate-scale-in" />
               )}
             </div>
           ))}
