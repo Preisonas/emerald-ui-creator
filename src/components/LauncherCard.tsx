@@ -23,10 +23,10 @@ const LauncherCard = () => {
   }
 
   return (
-    <div className="launcher-card animate-fade-in relative w-[420px] overflow-hidden p-8">
+    <div className="launcher-card animate-fade-in relative w-[380px] overflow-hidden p-6">
       <ImGuiParticles />
 
-      <h1 className="title-glow relative z-10 mb-10 text-center text-4xl font-bold tracking-wide text-primary">
+      <h1 className="title-glow relative z-10 mb-8 text-center text-3xl font-bold tracking-wide text-primary">
         Ahujien
       </h1>
 
@@ -34,39 +34,40 @@ const LauncherCard = () => {
         <LoadingSpinner onComplete={handleLoadingComplete} />
       ) : (
         <div className="animate-fade-in">
-          {/* Username input */}
           <div className="relative z-10 mb-4">
-            <label className="mb-2 block text-sm text-muted-foreground">
+            <label className="mb-1.5 block text-xs text-muted-foreground">
               Username
             </label>
             <input
               type="text"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
-              className="launcher-input w-full px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground"
+              className="launcher-input w-full px-3 py-2.5 text-sm text-foreground"
             />
           </div>
 
-          {/* Password input */}
-          <div className="relative z-10 mb-6">
-            <label className="mb-2 block text-sm text-muted-foreground">
+          <div className="relative z-10 mb-5">
+            <label className="mb-1.5 block text-xs text-muted-foreground">
               Password
             </label>
             <input
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="launcher-input w-full px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground"
+              className="launcher-input w-full px-3 py-2.5 text-sm text-foreground"
             />
           </div>
 
-          {/* Login button */}
           <button
             onClick={handleLogin}
-            className="launcher-button relative z-10 w-full py-3 text-sm font-medium text-foreground transition-all duration-200 hover:scale-[1.02]"
+            className="launcher-button relative z-10 w-full py-2.5 text-sm font-medium text-foreground transition-all duration-200"
           >
             Login
           </button>
+
+          <p className="relative z-10 mt-4 text-center text-[10px] text-muted-foreground">
+            Forgot password? Contact support
+          </p>
         </div>
       )}
     </div>
