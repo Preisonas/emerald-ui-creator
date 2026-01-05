@@ -35,48 +35,56 @@ const LoadingSpinner = ({ onComplete }: LoadingSpinnerProps) => {
     };
   }, [onComplete]);
 
+  const circumference = 2 * Math.PI * 44;
+  const strokeDashoffset = circumference - (progress / 100) * circumference;
+
   return (
-    <div className="flex flex-col items-center justify-center py-16">
+    <div className="flex flex-col items-center justify-center py-16 animate-fade-in">
       {/* Spinner with fade-in glow */}
       <div 
         className="relative mb-8"
         style={{
-          filter: `drop-shadow(0 0 ${12 + progress * 0.2}px hsl(160 84% 39% / ${glowOpacity * 0.6}))`,
+          filter: `drop-shadow(0 0 ${16 + progress * 0.2}px hsl(160 84% 39% / ${glowOpacity * 0.5}))`,
           transition: "filter 0.8s ease-out",
         }}
       >
-        <svg className="h-24 w-24" viewBox="0 0 100 100">
+        <svg 
+          className="h-28 w-28" 
+          viewBox="0 0 100 100"
+          style={{ transform: "rotate(-90deg)" }}
+        >
           {/* Background track */}
           <circle
             cx="50"
             cy="50"
-            r="42"
+            r="44"
             stroke="hsl(var(--secondary))"
-            strokeWidth="6"
+            strokeWidth="4"
             fill="none"
+            opacity="0.5"
           />
-          {/* Progress arc */}
+          {/* Progress arc - smooth with proper anti-aliasing */}
           <circle
             cx="50"
             cy="50"
-            r="42"
+            r="44"
             stroke="hsl(var(--primary))"
-            strokeWidth="6"
+            strokeWidth="4"
             fill="none"
             strokeLinecap="round"
-            strokeDasharray={`${progress * 2.64} 264`}
-            transform="rotate(-90 50 50)"
+            strokeDasharray={circumference}
+            strokeDashoffset={strokeDashoffset}
             style={{
-              transition: "stroke-dasharray 0.1s ease-out",
+              transition: "stroke-dashoffset 0.15s ease-out",
             }}
           />
         </svg>
         {/* Center percentage */}
-        <div className="absolute inset-0 flex items-center justify-center">
+        <div className="absolute inset-0 flex items-center justify-center" style={{ transform: "rotate(0deg)" }}>
           <span 
-            className="text-xl font-semibold text-primary"
+            className="text-2xl font-semibold text-primary"
             style={{
-              textShadow: `0 0 ${8 + progress * 0.1}px hsl(160 84% 39% / ${glowOpacity * 0.5})`,
+              textShadow: `0 0 ${10 + progress * 0.1}px hsl(160 84% 39% / ${glowOpacity * 0.4})`,
               transition: "text-shadow 0.5s ease-out",
             }}
           >
@@ -86,8 +94,10 @@ const LoadingSpinner = ({ onComplete }: LoadingSpinnerProps) => {
       </div>
 
       {/* Loading text */}
-      <p className="mb-2 text-sm font-medium text-foreground">Authenticating</p>
-      <p className="text-xs text-muted-foreground">
+      <p className="mb-2 text-sm font-medium text-foreground animate-fade-in" style={{ animationDelay: "0.2s" }}>
+        Authenticating
+      </p>
+      <p className="text-xs text-muted-foreground animate-fade-in" style={{ animationDelay: "0.3s" }}>
         Please wait while we verify your credentials...
       </p>
     </div>
