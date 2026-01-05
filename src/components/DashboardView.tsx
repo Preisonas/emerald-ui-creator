@@ -79,7 +79,7 @@ const DashboardView = () => {
           </div>
           <div className="flex items-center gap-2 rounded-full bg-primary/10 px-3 py-1.5">
             <div className="h-2 w-2 animate-pulse rounded-full bg-primary" />
-            <span className="text-xs font-medium text-primary">Online</span>
+            <span className="text-xs font-medium text-primary">Undetected - Online</span>
           </div>
         </div>
 

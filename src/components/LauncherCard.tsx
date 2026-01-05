@@ -2,6 +2,7 @@ import { useState } from "react";
 import ImGuiParticles from "./ImGuiParticles";
 import DashboardView from "./DashboardView";
 import LoadingSpinner from "./LoadingSpinner";
+import dashboardBg from "@/assets/dashboard-bg.png";
 
 type ViewState = "login" | "loading" | "dashboard";
 
@@ -23,8 +24,23 @@ const LauncherCard = () => {
   }
 
   return (
-    <div className="launcher-card animate-fade-in relative w-[380px] overflow-hidden p-6">
-      <ImGuiParticles />
+    <div className="animate-fade-in relative w-[380px] overflow-hidden rounded-2xl">
+      {/* Background image with blur */}
+      <div 
+        className="absolute inset-0 bg-cover bg-center blur-sm scale-110"
+        style={{ backgroundImage: `url(${dashboardBg})` }}
+      />
+      
+      {/* Gradient overlay - emerald top, black bottom */}
+      <div 
+        className="absolute inset-0"
+        style={{ 
+          background: "linear-gradient(to bottom, hsla(160, 84%, 25%, 0.7) 0%, hsla(0, 0%, 0%, 0.9) 100%)" 
+        }}
+      />
+
+      <div className="relative z-10 p-6">
+        <ImGuiParticles />
 
       <h1 className="title-glow relative z-10 mb-8 text-center text-3xl font-bold tracking-wide text-primary">
         Ahujien
@@ -78,6 +94,7 @@ const LauncherCard = () => {
           </p>
         </div>
       )}
+      </div>
     </div>
   );
 };
