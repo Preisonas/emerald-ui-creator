@@ -66,7 +66,15 @@ const LauncherCard = () => {
           </button>
 
           <p className="relative z-10 mt-4 text-center text-[10px] text-muted-foreground">
-            Forgot password? Contact support
+            Don't have an account?{" "}
+            <a
+              href="https://clearx.tech/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-primary hover:underline transition-colors"
+            >
+              Register here
+            </a>
           </p>
         </div>
       )}
