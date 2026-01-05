@@ -1,5 +1,6 @@
 import { useState } from "react";
 import stealthLogo from "@/assets/stealth-logo.png";
+import dashboardBg from "@/assets/dashboard-bg.png";
 
 interface Software {
   id: string;
@@ -52,24 +53,24 @@ const DashboardView = () => {
 
   return (
     <div className="relative flex h-screen w-screen items-center justify-center overflow-hidden">
-      {/* Blurred colored background shapes */}
-      <div className="absolute inset-0 overflow-hidden">
+      {/* Main content card with background image */}
+      <div className="animate-fade-in relative z-10 w-[480px] overflow-hidden rounded-2xl">
+        {/* Background image with blur */}
         <div 
-          className="absolute -left-32 -top-32 h-96 w-96 rounded-full opacity-30 blur-[120px]"
-          style={{ background: "hsl(160 84% 39%)" }}
+          className="absolute inset-0 bg-cover bg-center blur-sm"
+          style={{ backgroundImage: `url(${dashboardBg})` }}
         />
+        
+        {/* Gradient overlay - emerald top, black bottom */}
         <div 
-          className="absolute -bottom-48 -right-32 h-[500px] w-[500px] rounded-full opacity-25 blur-[140px]"
-          style={{ background: "hsl(200 80% 50%)" }}
+          className="absolute inset-0"
+          style={{ 
+            background: "linear-gradient(to bottom, hsla(160, 84%, 25%, 0.7) 0%, hsla(0, 0%, 0%, 0.85) 100%)" 
+          }}
         />
-        <div 
-          className="absolute left-1/2 top-1/4 h-72 w-72 -translate-x-1/2 rounded-full opacity-20 blur-[100px]"
-          style={{ background: "hsl(280 70% 50%)" }}
-        />
-      </div>
-
-      {/* Main content card */}
-      <div className="animate-fade-in relative z-10 w-[480px] rounded-2xl bg-card/90 p-8 backdrop-blur-xl">
+        
+        {/* Content */}
+        <div className="relative z-10 p-8">
         {/* Header */}
         <div className="mb-8 flex items-center justify-between">
           <div>
@@ -152,6 +153,7 @@ const DashboardView = () => {
             <div className="text-[11px] text-muted-foreground">Version</div>
             <div className="text-xs font-semibold text-foreground">v1.2.4</div>
           </div>
+        </div>
         </div>
       </div>
     </div>
